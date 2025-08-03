@@ -1,0 +1,24 @@
+﻿@model ProyectoFinalGrupo_1.Models.Event
+
+@{
+    ViewData["Title"] = "Eliminar Evento";
+}
+
+<div class="card mx-auto mt-4" style="max-width: 600px;">
+    <div class="card-header bg-danger text-white">
+        <h4>Eliminar Evento</h4>
+    </div>
+    <div class="card-body">
+        <h5>@Model.Titulo</h5>
+        <p><strong>Descripción:</strong> @Model.Descripcion</p>
+        <p><strong>Fecha:</strong> @Model.FechaEvento.ToString("dd/MM/yyyy")</p>
+        <p><strong>Lugar:</strong> @Model.Lugar</p>
+        <p><strong>¿Vendido?:</strong> @(Model.EstaVendido ? "Sí" : "No")</p>
+
+        <form asp-action="Delete" method="post">
+            <input type="hidden" asp-for="Id" />
+            <button type="submit" class="btn btn-danger">Confirmar eliminación</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
+        </form>
+    </div>
+</div>

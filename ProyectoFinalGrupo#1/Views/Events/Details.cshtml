@@ -1,0 +1,44 @@
+﻿@model ProyectoFinalGrupo_1.Models.Event
+
+@{
+    ViewData["Title"] = "Detalles del Evento";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-lg">
+        <img src="@Model.Banner" class="card-img-top" alt="Banner del evento" style="max-height: 400px; object-fit: cover;">
+        <div class="card-body">
+            <h2 class="card-title">@Model.Titulo</h2>
+            <p class="card-text">@Model.Descripcion</p>
+
+            <ul class="list-group list-group-flush mb-3">
+                <li class="list-group-item"><strong>Fecha:</strong> @Model.FechaEvento.ToString("dd/MM/yyyy hh:mm tt")</li>
+                <li class="list-group-item"><strong>Lugar:</strong> @Model.Lugar</li>
+                <li class="list-group-item">
+                    <strong>Estado:</strong>
+                    @if (Model.EstaVendido)
+                    {
+                        <span class="text-danger fw-bold">Agotado</span>
+                    }
+                    else
+                    {
+                        <span class="text-success">Disponible</span>
+                    }
+                </li>
+            </ul>
+
+            <div class="d-flex justify-content-between">
+                <a href="@Url.Action("Index", "Events")" class="btn btn-secondary">Volver</a>
+
+                @if (!Model.EstaVendido)
+                {
+                    <a href="#" class="btn btn-success">Comprar Boletos</a> <!-- Reemplaza # con URL de compra -->
+                }
+                else
+                {
+                    <button class="btn btn-danger" disabled>Agotado</button>
+                }
+            </div>
+        </div>
+    </div>
+</div>

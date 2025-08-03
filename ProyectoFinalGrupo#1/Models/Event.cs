@@ -1,83 +1,28 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ProyectoFinalGrupo_1.Models
 {
-    public class Event : Controller
+    public class Event 
     {
-        // GET: Event
-        public ActionResult Index()
-        {
-            return View();
-        }
+        public int Id { get; set; }
 
-        // GET: Event/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
+        [Required]
+        public string Titulo { get; set; }
 
-        // GET: Event/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        public string Descripcion { get; set; }
 
-        // POST: Event/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        [Display(Name = "Fecha del Evento")]
+        public DateTime FechaEvento { get; set; }
 
-        // GET: Event/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+        public string Lugar { get; set; }
 
-        // POST: Event/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        public string Banner { get; set; } 
 
-        // GET: Event/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+        [Display(Name = "¿Está vendido?")]
+        public bool EstaVendido { get; set; }
 
-        // POST: Event/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+
     }
 }

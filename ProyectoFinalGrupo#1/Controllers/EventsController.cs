@@ -1,83 +1,88 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoFinalGrupo_1.Data;
+using ProyectoFinalGrupo_1.Models;
 
 namespace ProyectoFinalGrupo_1.Controllers
 {
     public class EventsController : Controller
     {
-        // GET: EventsController
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public EventsController(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
+        public IActionResult Index()
+        {
+            var eventos = _context.Eventos.ToList();
+            return View(eventos);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var evento = _context.Eventos.FirstOrDefault(e => e.Id == id);
+            if (evento == null) return NotFound();
+            return View(evento);
+        }
+
+        public IActionResult Create()
         {
             return View();
         }
 
-        // GET: EventsController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        // GET: EventsController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: EventsController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public IActionResult Create(Event evento)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _context.Eventos.Add(evento);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(evento);
         }
 
-        // GET: EventsController/Edit/5
-        public ActionResult Edit(int id)
+        public IActionResult Edit(int id)
         {
-            return View();
+            var evento = _context.Eventos.FirstOrDefault(e => e.Id == id);
+            if (evento == null) return NotFound();
+            return View(evento);
         }
 
-        // POST: EventsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public IActionResult Edit(Event evento)
         {
-            try
+            if (ModelState.IsValid)
             {
+                _context.Eventos.Update(evento);
+                _context.SaveChanges();
                 return RedirectToAction(nameof(Index));
             }
-            catch
-            {
-                return View();
-            }
+            return View(evento);
         }
 
-        // GET: EventsController/Delete/5
-        public ActionResult Delete(int id)
+        public IActionResult Delete(int id)
         {
-            return View();
+            var evento = _context.Eventos.FirstOrDefault(e => e.Id == id);
+            if (evento == null) return NotFound();
+            return View(evento);
         }
 
-        // POST: EventsController/Delete/5
-        [HttpPost]
+        [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public IActionResult DeleteConfirmed(int id)
         {
-            try
+            var evento = _context.Eventos.FirstOrDefault(e => e.Id == id);
+            if (evento != null)
             {
-                return RedirectToAction(nameof(Index));
+                _context.Eventos.Remove(evento);
+                _context.SaveChanges();
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction(nameof(Index));
         }
     }
 }

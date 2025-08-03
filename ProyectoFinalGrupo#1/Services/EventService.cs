@@ -1,82 +1,42 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoFinalGrupo_1.Data;
+using ProyectoFinalGrupo_1.Models;
 
 namespace ProyectoFinalGrupo_1.Services
 {
-    public class EventService : Controller
+    public class EventService 
     {
-        // GET: EventService
-        public ActionResult Index()
+        private readonly ApplicationDbContext _context;
+
+        public EventService(ApplicationDbContext context)
         {
-            return View();
+            _context = context;
         }
 
-        // GET: EventService/Details/5
-        public ActionResult Details(int id)
+        public List<Event> GetAll() => _context.Eventos.ToList();
+
+        public Event GetById(int id) => _context.Eventos.FirstOrDefault(e => e.Id == id);
+
+        public void Add(Event evento)
         {
-            return View();
+            _context.Eventos.Add(evento);
+            _context.SaveChanges();
         }
 
-        // GET: EventService/Create
-        public ActionResult Create()
+        public void Update(Event evento)
         {
-            return View();
+            _context.Eventos.Update(evento);
+            _context.SaveChanges();
         }
 
-        // POST: EventService/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public void Delete(int id)
         {
-            try
+            var evento = GetById(id);
+            if (evento != null)
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: EventService/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: EventService/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: EventService/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: EventService/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
+                _context.Eventos.Remove(evento);
+                _context.SaveChanges();
             }
         }
     }

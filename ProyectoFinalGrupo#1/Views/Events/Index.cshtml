@@ -1,0 +1,39 @@
+﻿@model IEnumerable<ProyectoFinalGrupo_1.Models.Event>
+
+@{
+    ViewData["Title"] = "Eventos";
+}
+
+<h2 class="mb-4">Próximos Eventos en Costa Rica</h2>
+
+<!-- Botón Crear -->
+<div class="mb-3">
+    <a href="@Url.Action("Create", "Events")" class="btn btn-success">Crear Evento</a>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4">
+    @foreach (var evento in Model)
+    {
+        <div class="col">
+            <div class="card h-100">
+                <img src="@evento.Banner" class="card-img-top" alt="Banner de @evento.Titulo" style="height: 200px; object-fit: cover;">
+                <div class="card-body d-flex flex-column">
+                    <h5 class="card-title">@evento.Titulo</h5>
+                    <p class="card-text">@evento.Descripcion</p>
+                  
+
+                    <a href="@Url.Action("Details", "Events", new { id = evento.Id })" class="btn btn-primary mb-2 mt-auto">Ver Detalles</a>
+
+                    <div class="d-flex justify-content-between">
+                        <a href="@Url.Action("Edit", "Events", new { id = evento.Id })" class="btn btn-warning">Editar</a>
+                        <a href="@Url.Action("Delete", "Events", new { id = evento.Id })" class="btn btn-danger">Eliminar</a>
+                    </div>
+                </div>
+                @if (evento.EstaVendido)
+                {
+                    <div class="card-footer text-danger fw-bold text-center">Agotado</div>
+                }
+            </div>
+        </div>
+    }
+</div>

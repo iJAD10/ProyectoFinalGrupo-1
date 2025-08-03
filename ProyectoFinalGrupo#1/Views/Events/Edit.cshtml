@@ -1,0 +1,51 @@
+﻿@model ProyectoFinalGrupo_1.Models.Event
+
+@{
+    ViewData["Title"] = "Editar Evento";
+}
+
+<div class="card mx-auto mt-4" style="max-width: 600px;">
+    <div class="card-header bg-warning text-white">
+        <h4>Editar Evento</h4>
+    </div>
+    <div class="card-body">
+        <form asp-action="Edit" method="post">
+            <input type="hidden" asp-for="Id" />
+            <div class="mb-3">
+                <label asp-for="Titulo" class="form-label"></label>
+                <input asp-for="Titulo" class="form-control" />
+                <span asp-validation-for="Titulo" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Descripcion" class="form-label"></label>
+                <textarea asp-for="Descripcion" class="form-control" rows="3"></textarea>
+                <span asp-validation-for="Descripcion" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="FechaEvento" class="form-label"></label>
+                <input asp-for="FechaEvento" type="date" class="form-control" />
+                <span asp-validation-for="FechaEvento" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Lugar" class="form-label"></label>
+                <input asp-for="Lugar" class="form-control" />
+                <span asp-validation-for="Lugar" class="text-danger"></span>
+            </div>
+            <div class="mb-3">
+                <label asp-for="Banner" class="form-label">URL de la Imagen del Banner</label>
+                <input asp-for="Banner" class="form-control" />
+                <span asp-validation-for="Banner" class="text-danger"></span>
+            </div>
+            <div class="form-check mb-3">
+                <input asp-for="EstaVendido" class="form-check-input" />
+                <label asp-for="EstaVendido" class="form-check-label"></label>
+            </div>
+            <button type="submit" class="btn btn-warning">Guardar Cambios</button>
+            <a asp-action="Index" class="btn btn-secondary ms-2">Cancelar</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
